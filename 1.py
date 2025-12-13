@@ -4,6 +4,7 @@ load_dotenv()
 
 client = genai.Client()
 history = []
+history.append({"role": "model", "parts": [{"text": "Odpowiadaj zawsze po angielsku - nawet jak będzie pytanie po polsku."}]})
 
 while True:
     message = input("Ja: ")
