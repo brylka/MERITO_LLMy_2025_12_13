@@ -1,3 +1,4 @@
+import json
 from google import genai
 from dotenv import load_dotenv
 load_dotenv()
@@ -19,6 +20,10 @@ response = client.models.generate_content(
 )
 
 text = response.text
-if text.startswith("```"):
+if text.startswith("```json"):
     text = text.split("\n", 1)[1]
-print(f"Gemini: {text}")
+    text = text.split("```")[0]
+
+
+result = json.loads(text)
+print(f"Czy poprawne: {result['is_correct']}, poprawna odpowiedź: {result['result']}")

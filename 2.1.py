@@ -1,3 +1,5 @@
+import json
+
 text = """```json
 {
   "is_correct": false,
@@ -9,4 +11,7 @@ if text.startswith("```json"):
     text = text.split("```")[0]
 
 
-print(text)
+# print(text['is_correct'])
+
+result = json.loads(text)
+print(f"Czy poprawne: {result['is_correct']}, poprawna odpowiedź: {result['result']}")
