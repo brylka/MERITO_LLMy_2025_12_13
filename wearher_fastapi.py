@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from weather_service import get_current_weather, get_forecast
+from gemini_serive import analize_forecast
 
 app = FastAPI()
 
@@ -14,6 +15,11 @@ def current_weather():
 @app.get("/weather/forecast")
 def forecast_weather():
     return get_forecast()
+
+@app.get("/weather/analysis")
+def weather_analysis():
+    return analize_forecast(get_forecast())
+
 
 if __name__ == "__main__":
     import uvicorn

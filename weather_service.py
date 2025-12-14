@@ -31,7 +31,7 @@ def get_current_weather(city = "Wroclaw,PL"):
 def get_forecast(city = "Wroclaw,PL"):
     response = requests.get(f"{BASE_URL}forecast",
                  params={
-                     "q": "Wroclaw,PL",
+                     "q": city,
                      "appid": API_KEY,
                      "units": "metric",
                      "lang": "pl"
