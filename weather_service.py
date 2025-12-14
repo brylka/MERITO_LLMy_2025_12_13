@@ -28,19 +28,31 @@ def get_current_weather(city = "Wroclaw,PL"):
         "timestamp": datetime.now().isoformat()
     }
 
-    #print(data)
+def get_forecast(city = "Wroclaw,PL"):
+    response = requests.get(f"{BASE_URL}forecast",
+                 params={
+                     "q": "Wroclaw,PL",
+                     "appid": API_KEY,
+                     "units": "metric",
+                     "lang": "pl"
+                 })
 
-# response = requests.get(f"{BASE_URL}forecast",
-#              params={
-#                  "q": "Wroclaw,PL",
-#                  "appid": API_KEY,
-#                  "units": "metric",
-#                  "lang": "pl"
-#              })
-#
-# data = response.json()
+    data = response.json()
 
-# print(data['list'][0]['dt_txt'], data['list'][0]['main']['temp'], "'C")
+    forecast_list = []
+    for item in data['list']:
+        forecast_list.append({
+            "temperature": item["main"]["temp"],
+            "feels_like": item["main"]["feels_like"],
+            "description": item["weather"][0]["description"],
+            "humidity": item["main"]["humidity"],
+            "wind_speed": item["wind"]["speed"],
+            "datetime": item["dt_txt"]
+        })
+    return {
+        "forecast": forecast_list,
+        "city": data["city"]["name"]
+    }
 
 if __name__ == "__main__":
     print("=== TEST SERWISU POGODOWEGO ===")
@@ -49,3 +61,8 @@ if __name__ == "__main__":
     print(f"Miasto:      {current["city"]}")
     print(f"Temperatura: {current["temperature"]}'C")
     print(f"Opis:        {current["description"]}")
+
+    forecast = get_forecast()
+    print(f"Prognoza dla miasta {forecast["city"]}")
+    for item in forecast["forecast"][:3]:
+        print(f"{item['datetime']}: {item["temperature"]}'C\t{item["description"]}")
