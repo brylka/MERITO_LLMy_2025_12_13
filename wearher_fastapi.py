@@ -26,3 +26,8 @@ def weather_analysis():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
+
+
+# Tworzymy endpoint, który zwraca analizę jutrzejszej prognozy pogody
+# (wysyłamy do analizy tylko jutrzejszą prognozę pogody)
+# Praca własna do 11:30 Słyczymy się po przerwie obiadowej o 12:00
