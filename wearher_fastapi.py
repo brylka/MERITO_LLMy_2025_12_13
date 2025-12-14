@@ -1,4 +1,5 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
+
 from weather_service import get_current_weather, get_forecast
 from gemini_serive import analize_forecast
 
@@ -9,8 +10,8 @@ def hello_world():
     return {"message": "Witaj Świecie!"}
 
 @app.get("/weather/current")
-def current_weather():
-    return get_current_weather()
+def current_weather(city = Query(default="Krakow,PL")):
+    return get_current_weather(city)
 
 @app.get("/weather/forecast")
 def forecast_weather():
