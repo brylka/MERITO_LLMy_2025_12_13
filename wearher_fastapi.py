@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from weather_service import get_current_weather, get_forecast
 from gemini_serive import analize_forecast
 
@@ -18,8 +18,10 @@ def forecast_weather():
 
 @app.get("/weather/analysis")
 def weather_analysis():
-    return analize_forecast(get_forecast())
-
+    try:
+        return analize_forecast(get_forecast())
+    except:
+        raise HTTPException(status_code=502, detail="Błąd zewnętrznego API")
 
 if __name__ == "__main__":
     import uvicorn
